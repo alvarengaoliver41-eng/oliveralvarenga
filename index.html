@@ -207,8 +207,8 @@
 
       /* About */
       #sobre-mi { flex-direction: column !important; min-height: auto !important; }
-      #sobre-mi > div:first-child { width: 100% !important; min-height: 110vw !important; flex-shrink: 0; }
-      #sobre-mi > div:first-child img { object-position: center 18% !important; }
+      #sobre-mi > div:first-child { width: 100% !important; min-height: 135vw !important; flex-shrink: 0; }
+      #sobre-mi > div:first-child img { object-position: center 10% !important; }
       #sobre-mi > div:last-child { padding: 40px 24px 56px !important; }
 
       /* Features */
@@ -504,11 +504,11 @@ function About() {
         <img
           src="uploads/6DAE82B7-A3F2-4AD9-92F4-4B06E28FF1BA.PNG"
           alt="Oliver Alvarenga"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'contrast(1.06) brightness(0.88)' }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 12%', filter: 'contrast(1.04) brightness(0.92)' }}
         />
         {/* Multi-directional fades */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #06141B 0%, transparent 22%, transparent 62%, #06141B 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 0%, transparent 78%, #06141B 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #06141B 0%, transparent 18%, transparent 68%, #06141B 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 0%, transparent 85%, #06141B 100%)' }} />
 
         {/* Bottom identity */}
         <div style={{ position: 'absolute', bottom: 44, left: 44, zIndex: 2 }}>
@@ -573,15 +573,6 @@ function About() {
           ))}
         </div>
 
-        {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, borderTop: '1px solid rgba(37,55,69,0.5)', paddingTop: 36, maxWidth: 480 }}>
-          {[['IA + código', 'En cada solución'], ['Sin agencias', 'Directo y sin rodeos'], ['End-to-end', 'De la idea al deploy']].map(([val, label], i) => (
-            <div key={i} style={{ paddingRight: i < 2 ? 24 : 0, borderRight: i < 2 ? '1px solid rgba(37,55,69,0.4)' : 'none', paddingLeft: i > 0 ? 24 : 0 }}>
-              <div style={{ fontSize: 16, fontWeight: 800, color: '#CCD0CF', letterSpacing: '-0.01em', marginBottom: 6 }}>{val}</div>
-              <div style={{ fontSize: 10.5, color: '#4A5C6A', fontWeight: 300, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{label}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
