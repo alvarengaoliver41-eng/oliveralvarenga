@@ -221,11 +221,9 @@
       #servicios { padding: 80px 16px 100px !important; }
 
       /* Contact */
-      #contacto > div:first-child { width: 100% !important; left: 0 !important; right: 0 !important; }
-      #contacto > div:nth-child(2) { display: none !important; }
-      #contacto > div:nth-child(4) { display: none !important; }
-      #contacto > div:last-child { max-width: 100% !important; padding: 80px 28px 80px !important; background: none !important; }
-      #contacto h2 { font-size: clamp(44px, 14vw, 72px) !important; }
+      #contacto { padding: 80px 16px 80px !important; }
+      #contacto h2 { font-size: clamp(40px, 12vw, 68px) !important; line-height: 1 !important; }
+      #calendly-inline-container { height: 600px !important; }
 
       /* About heading */
       #sobre-mi div[style*="clamp(24px"] { font-size: clamp(22px, 6vw, 34px) !important; }
@@ -811,117 +809,125 @@ function RevealCard({ children, delay = 0 }) {
 
 /* ─── CONTACT ──────────────────────────────────────────────────── */
 function Contact() {
-  const [ref, visible] = useReveal();
-  const phone = '+595974897627';
-  const waLink = `https://wa.me/${phone.replace(/\D/g, '')}`;
+  const [headerRef, headerVisible] = useReveal();
+  const [widgetRef, widgetVisible] = useReveal();
+  const [statsRef, statsVisible] = useReveal();
+
+  useEffect(() => {
+    if (!document.querySelector('link[href*="calendly"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://assets.calendly.com/assets/external/widget.css';
+      document.head.appendChild(link);
+    }
+    const el = document.getElementById('calendly-inline-container');
+    const url = 'https://calendly.com/oliveralvarengaxyz/30min?hide_gdpr_banner=1&background_color=06141B&text_color=E1E0CC&primary_color=9BA8AB';
+    const init = () => { if (window.Calendly && el) window.Calendly.initInlineWidget({ url, parentElement: el }); };
+    if (window.Calendly) { init(); }
+    else {
+      const s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true; s.onload = init;
+      document.head.appendChild(s);
+    }
+  }, []);
 
   return (
-    <section id="contacto" style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}>
+    <section id="contacto" style={{ position: 'relative', overflow: 'hidden', padding: '120px 24px 100px' }}>
 
-      {/* Staircase image — right half */}
+      {/* Background image — full bleed, heavily muted */}
       <div style={{
-        position: 'absolute', top: 0, right: 0, bottom: 0, width: '52%',
+        position: 'absolute', inset: 0,
         backgroundImage: 'url(uploads/1241.jpeg)',
         backgroundSize: 'cover', backgroundPosition: 'center top',
-        filter: 'saturate(0.45) brightness(0.38)'
+        filter: 'saturate(0.25) brightness(0.2)'
       }} />
 
-      {/* Fade image into bg on left */}
+      {/* Gradient fades */}
       <div style={{
-        position: 'absolute', top: 0, right: 0, bottom: 0, width: '52%',
-        background: 'linear-gradient(to right, #06141B 0%, transparent 30%)'
-      }} />
-      {/* Top + bottom fades */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #06141B 0%, transparent 12%, transparent 80%, #06141B 100%)', pointerEvents: 'none' }} />
-
-      {/* Vertical rule */}
-      <div style={{
-        position: 'absolute', top: '10%', bottom: '10%', left: '50%',
-        width: 1,
-        background: 'linear-gradient(to bottom, transparent, #4A5C6A 30%, #4A5C6A 70%, transparent)',
-        opacity: 0.4
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        background: 'linear-gradient(to bottom, #06141B 0%, rgba(6,20,27,0.5) 20%, rgba(6,20,27,0.5) 80%, #06141B 100%)'
       }} />
 
-      {/* Left: content */}
-      <div
-        ref={ref}
-        className={`reveal${visible ? ' visible' : ''}`}
-        style={{
-          position: 'relative', zIndex: 2,
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          minHeight: '100vh', padding: '100px 6% 100px 7%',
-          maxWidth: '52%'
-        }}>
-        
-        {/* Eyebrow */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
-          <div style={{ width: 32, height: 1, background: '#4A5C6A' }} />
-          <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4A5C6A', fontWeight: 700 }}>
-            Trabajemos juntos
-          </span>
+      {/* Content container */}
+      <div style={{ position: 'relative', zIndex: 2, maxWidth: 900, margin: '0 auto' }}>
+
+        {/* Header */}
+        <div
+          ref={headerRef}
+          className={`reveal${headerVisible ? ' visible' : ''}`}
+          style={{ textAlign: 'center', marginBottom: 56 }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 36 }}>
+            <div style={{ width: 32, height: 1, background: '#4A5C6A' }} />
+            <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4A5C6A', fontWeight: 700 }}>
+              Trabajemos juntos
+            </span>
+            <div style={{ width: 32, height: 1, background: '#4A5C6A' }} />
+          </div>
+
+          <h2 style={{
+            fontSize: 'clamp(52px, 7vw, 100px)', fontWeight: 800,
+            lineHeight: 0.92, letterSpacing: '-0.04em',
+            color: '#E1E0CC', marginBottom: 28
+          }}>
+            {'¿Listo'}{' '}
+            <span style={{ color: '#9BA8AB', fontWeight: 300, fontStyle: 'italic', fontFamily: '"Instrument Serif", serif' }}>para escalar</span>
+            {' '}tu negocio?
+          </h2>
+
+          <p style={{
+            fontSize: 16, color: 'rgba(155,168,171,0.75)', fontWeight: 300,
+            lineHeight: 1.8, maxWidth: 480, margin: '0 auto'
+          }}>
+            Agendá una llamada gratuita de 30 minutos. Te muestro exactamente qué sistema construiría para vos.
+          </p>
         </div>
 
-        {/* Big headline */}
-        <h2 style={{
-          fontSize: 'clamp(52px, 7vw, 108px)', fontWeight: 800,
-          lineHeight: 0.92, letterSpacing: '-0.04em',
-          color: '#E1E0CC', marginBottom: 36
-        }}>
-          ¿Listo<br />
-          <span style={{ color: '#9BA8AB', fontWeight: 300, fontStyle: 'italic', fontFamily: '"Instrument Serif", serif' }}>para escalar</span><br />
-          tu negocio?
-        </h2>
-
-        {/* Descriptor */}
-        <p style={{
-          fontSize: 16, color: 'rgba(155,168,171,0.8)', fontWeight: 300,
-          lineHeight: 1.8, maxWidth: 420, marginBottom: 56
-        }}>
-          Contame tu negocio y te muestro exactamente qué sistema construiría para vos. Sin rodeos, sin agencias, sin tiempos muertos.
-        </p>
-
-        {/* CTA Buttons */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 360 }}>
-          <a
-            href={waLink} target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              background: '#253745', color: '#CCD0CF',
-              border: '1px solid #4A5C6A', borderRadius: '1rem',
-              padding: '20px 28px', fontSize: 15, fontWeight: 700,
-              fontFamily: 'Almarai, sans-serif', textDecoration: 'none',
-              transition: 'all 0.3s'
-            }}
-            onMouseEnter={(e) => {e.currentTarget.style.background = '#4A5C6A';e.currentTarget.style.borderColor = '#9BA8AB';e.currentTarget.style.transform = 'translateX(6px)';}}
-            onMouseLeave={(e) => {e.currentTarget.style.background = '#253745';e.currentTarget.style.borderColor = '#4A5C6A';e.currentTarget.style.transform = 'translateX(0)';}}>
-            
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#9BA8AB" />
-                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.944-1.418A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.078-1.117l-.292-.173-3.037.872.872-3.013-.19-.31A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z" fill="#9BA8AB" />
-              </svg>
-              Escribime por WhatsApp
-            </div>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="#9BA8AB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
-
+        {/* Calendly widget card */}
+        <div
+          ref={widgetRef}
+          className={`reveal${widgetVisible ? ' visible' : ''}`}
+          style={{ transitionDelay: '0.12s', marginBottom: 56 }}
+        >
+          <div style={{
+            background: 'rgba(17,33,45,0.7)',
+            border: '1px solid #253745',
+            borderRadius: '1.5rem',
+            overflow: 'hidden',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 40px 80px rgba(6,20,27,0.7), inset 0 1px 0 rgba(74,92,106,0.12)'
+          }}>
+            <div
+              id="calendly-inline-container"
+              style={{ minWidth: '320px', height: '700px' }}
+            />
+          </div>
         </div>
 
         {/* Stats row */}
-        <div style={{ display: 'flex', gap: 40, marginTop: 64, paddingTop: 40, borderTop: '1px solid rgba(74,92,106,0.2)' }}>
+        <div
+          ref={statsRef}
+          className={`reveal${statsVisible ? ' visible' : ''}`}
+          style={{
+            display: 'flex', gap: 40, paddingTop: 40,
+            borderTop: '1px solid rgba(74,92,106,0.2)',
+            justifyContent: 'center', flexWrap: 'wrap'
+          }}
+        >
           {[['End to end', 'De la idea al deploy'], ['Sin agencias', 'Directo y sin rodeos'], ['IA + código', 'En cada decisión']].map(([val, label], i) =>
-          <div key={i}>
+            <div key={i} style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 18, fontWeight: 800, color: '#CCD0CF', letterSpacing: '-0.02em' }}>{val}</div>
               <div style={{ fontSize: 11, color: '#4A5C6A', fontWeight: 300, marginTop: 4, letterSpacing: '0.04em' }}>{label}</div>
             </div>
           )}
         </div>
-      </div>
-    </section>);
 
+      </div>
+    </section>
+  );
 }
+
 
 /* ─── FOOTER ───────────────────────────────────────────────────── */
 function Footer() {
