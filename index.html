@@ -605,32 +605,36 @@ function Hero() {
               <p style={{ fontSize: 15, lineHeight: 1.75, color: 'rgba(244,241,234,0.65)', fontWeight: 300, maxWidth: 520 }}>
                 Construyo sistemas que automatizan tu negocio y lo hacen crecer sin límites. Mientras otros compiten en el pasado, vos estás en el futuro.
               </p>
-              <button className="cta-btn" style={{
-              fontSize: 14,
-              padding: '16px 48px',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, #245BFF 0%, #7FE7FF 100%)',
-              color: '#0A1026',
-              border: 'none',
-              borderRadius: '12px',
+              <button style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              fontSize: 13,
+              padding: '14px 28px',
+              fontWeight: 500,
+              background: 'transparent',
+              color: '#F4F1EA',
+              border: '1px solid rgba(127,231,255,0.35)',
+              borderRadius: '999px',
               cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.33, 1, 0.68, 1)',
-              boxShadow: '0 0 40px rgba(36,91,255,0.4), 0 8px 32px rgba(36,91,255,0.3)',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              position: 'relative',
-              overflow: 'hidden'
+              fontFamily: 'Inter, sans-serif',
+              transition: 'border-color 0.25s, color 0.25s, gap 0.25s'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 0 60px rgba(127,231,255,0.6), 0 16px 48px rgba(36,91,255,0.4)';
+              e.currentTarget.style.borderColor = 'rgba(127,231,255,0.8)';
+              e.currentTarget.style.color = '#7FE7FF';
+              e.currentTarget.style.gap = '14px';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 0 40px rgba(36,91,255,0.4), 0 8px 32px rgba(36,91,255,0.3)';
+              e.currentTarget.style.borderColor = 'rgba(127,231,255,0.35)';
+              e.currentTarget.style.color = '#F4F1EA';
+              e.currentTarget.style.gap = '10px';
             }}
             onClick={() => document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' })}>
               Entré al futuro
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 7h10M8 3l4 4-4 4"/>
+              </svg>
             </button>
             </div>
           </div>
