@@ -350,24 +350,14 @@ function Hero() {
 
     let mouseX = canvas.width / 2;
     let mouseY = canvas.height / 2;
+    let hasMoved = false;
     let time = 0;
-
-    const particles = [];
-    for (let i = 0; i < 40; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 0.5,
-        life: Math.random() * 0.5 + 0.5
-      });
-    }
 
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY - rect.top;
+      hasMoved = true;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -407,35 +397,36 @@ function Hero() {
         ctx.stroke();
       }
 
-      const centerGradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 400);
-      centerGradient.addColorStop(0, `rgba(127,231,255,${0.15 + Math.sin(time * 0.5) * 0.08})`);
-      centerGradient.addColorStop(0.5, `rgba(36,91,255,${0.08 + Math.cos(time * 0.4) * 0.04})`);
-      centerGradient.addColorStop(1, 'rgba(10,16,38,0)');
+      if (hasMoved) {
+        const centerGradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 400);
+        centerGradient.addColorStop(0, `rgba(127,231,255,${0.15 + Math.sin(time * 0.5) * 0.08})`);
+        centerGradient.addColorStop(0.5, `rgba(36,91,255,${0.08 + Math.cos(time * 0.4) * 0.04})`);
+        centerGradient.addColorStop(1, 'rgba(10,16,38,0)');
 
-      ctx.fillStyle = centerGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = centerGradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = `rgba(127,231,255,${0.2 + Math.sin(time) * 0.1})`;
-      ctx.shadowColor = `rgba(127,231,255,0.3)`;
-      ctx.shadowBlur = 20;
+        ctx.shadowColor = `rgba(127,231,255,0.3)`;
+        ctx.shadowBlur = 20;
 
-      for (let x = Math.round((mouseX - 150) / gridSize) * gridSize; x < mouseX + 150; x += gridSize) {
-        for (let y = Math.round((mouseY - 150) / gridSize) * gridSize; y < mouseY + 150; y += gridSize) {
-          const dx = x - mouseX;
-          const dy = y - mouseY;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          const opacity = Math.max(0, 1 - distance / 150);
+        for (let x = Math.round((mouseX - 150) / gridSize) * gridSize; x < mouseX + 150; x += gridSize) {
+          for (let y = Math.round((mouseY - 150) / gridSize) * gridSize; y < mouseY + 150; y += gridSize) {
+            const dx = x - mouseX;
+            const dy = y - mouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const opacity = Math.max(0, 1 - distance / 150);
 
-          if (opacity > 0.1) {
-            ctx.fillStyle = `rgba(127,231,255,${opacity * 0.5})`;
-            ctx.beginPath();
-            ctx.arc(x, y, 2 + opacity * 3, 0, Math.PI * 2);
-            ctx.fill();
+            if (opacity > 0.1) {
+              ctx.fillStyle = `rgba(127,231,255,${opacity * 0.5})`;
+              ctx.beginPath();
+              ctx.arc(x, y, 2 + opacity * 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
         }
-      }
 
-      ctx.shadowColor = 'transparent';
+        ctx.shadowColor = 'transparent';
+      }
       requestAnimationFrame(animate);
     };
 
