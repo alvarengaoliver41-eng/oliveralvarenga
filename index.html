@@ -876,6 +876,141 @@ function Features() {
 
 }
 
+function SocialMedia() {
+  return (
+    <section id="redes" style={{ padding: '120px 24px 120px', position: 'relative' }}>
+      <div className="bg-noise-layer" />
+      <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+        <div style={{ marginBottom: 64, textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ width: 24, height: 1, background: 'rgba(127,231,255,0.4)' }} />
+            <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(127,231,255,0.6)', fontWeight: 700 }}>Contenido</span>
+            <div style={{ width: 24, height: 1, background: 'rgba(127,231,255,0.4)' }} />
+          </div>
+          <h2 style={{ fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 800, lineHeight: 1.05, color: '#F4F1EA', letterSpacing: '-0.04em', marginBottom: 16 }}>
+            Aprendé y crecé<br /><span style={{ color: '#7FE7FF', fontWeight: 300, fontStyle: 'italic', fontFamily: 'Times' }}>junto a mí.</span>
+          </h2>
+          <p style={{ fontSize: 15, color: 'rgba(244,241,234,0.5)', fontWeight: 300, maxWidth: 440, margin: '0 auto' }}>
+            Contenido gratuito para que domines la IA y la automatización en tu negocio.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="social-grid">
+          <style>{`.social-grid { } @media(max-width:768px){ .social-grid{ grid-template-columns:1fr !important; } }`}</style>
+
+          <a href="https://www.youtube.com/@oliverbuildss" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255,50,50,0.07) 0%, rgba(10,16,38,0.85) 70%)',
+              border: '1px solid rgba(255,80,80,0.2)',
+              borderRadius: '1.5rem', padding: '48px 44px',
+              position: 'relative', overflow: 'hidden', cursor: 'pointer',
+              transition: 'border-color 0.3s, transform 0.3s',
+              height: '100%'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,80,80,0.5)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,80,80,0.2)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+              <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,0,0,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+              <div style={{ marginBottom: 28, display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(255,0,0,0.12)', border: '1px solid rgba(255,80,80,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+                    <path d="M21.6 2.5a2.7 2.7 0 0 0-1.9-1.9C18 0 11 0 11 0S4 0 2.3.6A2.7 2.7 0 0 0 .4 2.5C0 4.2 0 8 0 8s0 3.8.4 5.5a2.7 2.7 0 0 0 1.9 1.9C4 16 11 16 11 16s7 0 8.7-.6a2.7 2.7 0 0 0 1.9-1.9C22 11.8 22 8 22 8s0-3.8-.4-5.5z" fill="#FF4444"/>
+                    <path d="M8.8 11.4V4.6L14.5 8l-5.7 3.4z" fill="#0A1026"/>
+                  </svg>
+                </div>
+                <div>
+                  <p style={{ fontSize: 10, color: 'rgba(255,80,80,0.7)', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 3 }}>YouTube</p>
+                  <p style={{ fontSize: 14, color: '#F4F1EA', fontWeight: 600, letterSpacing: '-0.01em' }}>@oliverbuildss</p>
+                </div>
+              </div>
+
+              <h3 style={{ fontSize: 'clamp(22px, 2.4vw, 32px)', fontWeight: 800, color: '#F4F1EA', letterSpacing: '-0.03em', lineHeight: 1.15, marginBottom: 14 }}>
+                Aprendé a construir<br />sistemas con IA.
+              </h3>
+
+              <p style={{ fontSize: 13.5, color: 'rgba(244,241,234,0.5)', fontWeight: 300, lineHeight: 1.8, marginBottom: 28 }}>
+                Tutoriales, frameworks y estrategias para que puedas automatizar tu negocio y aprovechar la IA al máximo — gratis.
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 32 }}>
+                {['Automatización', 'IA práctica', 'n8n', 'Casos reales'].map((tag, i) =>
+                  <span key={i} style={{ fontSize: 11, color: 'rgba(255,80,80,0.65)', border: '1px solid rgba(255,80,80,0.18)', borderRadius: '2rem', padding: '4px 11px', background: 'rgba(255,0,0,0.04)' }}>{tag}</span>
+                )}
+              </div>
+
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12.5, fontWeight: 700, color: '#FF6666', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                Suscribirse
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 7h10M8 3l4 4-4 4"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/oliverbuildss/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(131,58,180,0.07) 0%, rgba(10,16,38,0.85) 70%)',
+              border: '1px solid rgba(180,80,220,0.2)',
+              borderRadius: '1.5rem', padding: '48px 44px',
+              position: 'relative', overflow: 'hidden', cursor: 'pointer',
+              transition: 'border-color 0.3s, transform 0.3s',
+              height: '100%'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(180,80,220,0.5)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(180,80,220,0.2)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+              <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(131,58,180,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+              <div style={{ marginBottom: 28, display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(131,58,180,0.12)', border: '1px solid rgba(180,80,220,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <defs>
+                      <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#F58529"/>
+                        <stop offset="50%" stopColor="#DD2A7B"/>
+                        <stop offset="100%" stopColor="#8134AF"/>
+                      </linearGradient>
+                    </defs>
+                    <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#ig-grad)" strokeWidth="2"/>
+                    <circle cx="12" cy="12" r="4.2" stroke="url(#ig-grad)" strokeWidth="2"/>
+                    <circle cx="17.5" cy="6.5" r="1.3" fill="url(#ig-grad)"/>
+                  </svg>
+                </div>
+                <div>
+                  <p style={{ fontSize: 10, color: 'rgba(180,80,220,0.8)', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 3 }}>Instagram</p>
+                  <p style={{ fontSize: 14, color: '#F4F1EA', fontWeight: 600, letterSpacing: '-0.01em' }}>@oliverbuildss</p>
+                </div>
+              </div>
+
+              <h3 style={{ fontSize: 'clamp(22px, 2.4vw, 32px)', fontWeight: 800, color: '#F4F1EA', letterSpacing: '-0.03em', lineHeight: 1.15, marginBottom: 14 }}>
+                Resultados reales,<br />casos de éxito.
+              </h3>
+
+              <p style={{ fontSize: 13.5, color: 'rgba(244,241,234,0.5)', fontWeight: 300, lineHeight: 1.8, marginBottom: 28 }}>
+                Seguime para ver soluciones en acción, transformaciones de negocios reales y contenido educativo sobre IA y automatización.
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 32 }}>
+                {['Casos de éxito', 'Soluciones IA', 'Educación', 'Detrás de escena'].map((tag, i) =>
+                  <span key={i} style={{ fontSize: 11, color: 'rgba(180,80,220,0.65)', border: '1px solid rgba(180,80,220,0.18)', borderRadius: '2rem', padding: '4px 11px', background: 'rgba(131,58,180,0.04)' }}>{tag}</span>
+                )}
+              </div>
+
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12.5, fontWeight: 700, color: '#C864DC', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                Seguir
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 7h10M8 3l4 4-4 4"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Contact() {
   const [headerRef, headerVisible] = useReveal();
   const [widgetRef, widgetVisible] = useReveal();
@@ -1041,6 +1176,7 @@ function App() {
       <Hero />
       <div className="section-glow" style={{ marginTop: 0 }}><About /></div>
       <div className="section-glow"><Features /></div>
+      <div className="section-glow"><SocialMedia /></div>
       <div className="section-glow"><Contact /></div>
       <Footer />
     </div>);
