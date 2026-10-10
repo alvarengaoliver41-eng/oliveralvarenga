@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/trabajemosjuntos", "destination": "/trabajemosjuntos.html" }
-  ]
-}
