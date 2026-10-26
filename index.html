@@ -14,19 +14,20 @@
   :root {
     --bg: oklch(0.13 0.002 260);
     --fg: oklch(0.95 0.002 260);
+    --soft: oklch(0.78 0.003 260);
     --muted: oklch(0.55 0.004 260);
     --label: oklch(0.5 0.004 260);
+    --faint: oklch(0.38 0.004 260);
     --rule: oklch(1 0 0 / 0.08);
-    --card: oklch(0.97 0.002 260);
     --sans: 'Inter', Helvetica, Arial, sans-serif;
     --serif: 'Newsreader', serif;
   }
 
-  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
   ::selection { background: oklch(0.94 0.002 260); color: var(--bg); }
   img { display: block; }
-
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  p { margin: 0; }
+  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
   /* Hero */
   .hero {
@@ -46,9 +47,8 @@
     margin: 0; font-weight: 300; line-height: 1; letter-spacing: -0.03em; text-wrap: pretty;
     font-size: clamp(38px, 7.2vw, 104px);
   }
-  .headline em { font-style: italic; font-family: var(--serif); font-weight: 400; }
 
-  /* Portfolio */
+  /* Sections */
   .portfolio {
     width: 100%; box-sizing: border-box; padding: 4vh 6vw 6vh;
     display: flex; flex-direction: column; align-items: center; gap: 28px;
@@ -58,32 +58,78 @@
     font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--label);
     border-bottom: 1px solid var(--rule); padding-bottom: 14px;
   }
-  .section-label.spaced { margin-top: 6vh; }
+  .section-label.spaced { margin-top: 8vh; }
 
-  .marquee-viewport {
-    width: 100%; max-width: 1300px; overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-            mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  /* 01 — Visión */
+  .manifesto {
+    width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 22px;
+    padding: 3vh 0 1vh; font-size: clamp(17px, 1.5vw, 20px); font-weight: 300; line-height: 1.6; color: var(--soft);
   }
-  .marquee { display: flex; width: max-content; animation: marquee 32s linear infinite; }
-  /* margin instead of gap so -50% lands exactly on the start of the duplicate set */
-  .shot-card {
-    flex: 0 0 auto; width: 300px; margin-right: 20px; padding: 16px;
-    border-radius: 8px; overflow: hidden; background: var(--card);
-    display: flex; align-items: center;
-    filter: grayscale(0.6); transition: filter 0.3s;
+  .manifesto strong { color: var(--fg); font-weight: 400; }
+  .quote {
+    margin: 4vh 0 0; text-align: center; font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
+    font-size: clamp(32px, 5.4vw, 72px);
   }
-  .shot-card:hover { filter: grayscale(0); }
-  .shot-card img { width: 100%; height: auto; object-fit: contain; }
+  .quote b { font-weight: 500; letter-spacing: 0.02em; }
 
-  .cta-wrap { width: 100%; max-width: 640px; display: flex; flex-direction: column; align-items: center; margin-top: 8px; }
-  .cta {
-    text-decoration: none; background: var(--fg); color: var(--bg); border-radius: 2px;
-    padding: 18px 44px; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-    white-space: nowrap; transition: transform 0.25s, box-shadow 0.25s;
+  /* 02 — El camino */
+  .timeline { width: 100%; max-width: 1000px; padding: 3vh 0 0; }
+  .tl-item {
+    position: relative; display: grid; grid-template-columns: 150px 1fr; column-gap: 48px;
+    padding-bottom: 9vh;
   }
-  .cta:hover, .cta:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 30px oklch(1 0 0 / 0.15); }
+  .tl-item:last-child { padding-bottom: 0; }
+  /* the vertical line runs between the year column and the content */
+  .tl-item::before {
+    content: ""; position: absolute; left: 174px; top: 10px; bottom: -10px; width: 1px; background: var(--rule);
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-item::after {
+    content: ""; position: absolute; left: 170px; top: 6px; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--muted); box-sizing: border-box;
+  }
+  .tl-item.key::after { background: var(--fg); border-color: var(--fg); box-shadow: 0 0 0 6px oklch(1 0 0 / 0.06), 0 0 24px oklch(1 0 0 / 0.35); }
+  .tl-year {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    text-align: right; padding-top: 4px;
+  }
+  .tl-body { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .tl-title { margin: 0; font-weight: 300; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1; }
+  .tl-text { font-size: 16px; font-weight: 300; line-height: 1.6; color: var(--soft); max-width: 600px; }
 
+  .ventures { list-style: none; margin: 4px 0 0; padding: 0; max-width: 520px; }
+  .ventures li {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 13px 0; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 300; color: var(--muted);
+  }
+  .ventures li span:first-child { text-decoration: line-through; text-decoration-color: var(--faint); }
+  .ventures li span:last-child { font-variant-numeric: tabular-nums; font-size: 13px; letter-spacing: 0.06em; color: var(--faint); }
+  .footnote { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--soft); }
+
+  .ecom {
+    margin: 0; font-weight: 300; line-height: 0.92; letter-spacing: -0.045em;
+    font-size: clamp(54px, 10.5vw, 148px);
+  }
+  .ecom-sub { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .reasons {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 12px;
+    border-top: 1px solid oklch(1 0 0 / 0.18);
+  }
+  .reasons div { padding: 18px 20px 0 0; display: flex; flex-direction: column; gap: 10px; }
+  .reasons span { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .reasons p { font-size: 17px; font-weight: 300; line-height: 1.35; }
+
+  .big-num {
+    margin: 0; font-weight: 300; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
+    font-size: clamp(44px, 7.4vw, 104px);
+  }
+  .big-num-sub { font-size: clamp(18px, 1.8vw, 22px); font-weight: 300; color: var(--soft); }
+  .big-num-sub b { color: var(--fg); font-weight: 600; letter-spacing: 0.04em; }
+
+  .closing { margin: 0; font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; font-size: clamp(30px, 4.6vw, 60px); }
+  .closing em { white-space: nowrap; }
+
+  /* 03 — Omnia */
   .omnia { width: 100%; max-width: 1300px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 2vh 0; }
   .omnia img { width: clamp(64px, 8vw, 96px); height: auto; }
   .omnia a {
@@ -92,19 +138,32 @@
   }
   .omnia a:hover, .omnia a:focus-visible { border-color: var(--fg); }
 
+  /* Scroll reveal — only when JS is running, so content is never hidden without it */
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+
   @media (max-width: 640px) {
     .hero { padding: 2.5vh 6vw 3vh; gap: 6vh; }
     .stack { gap: 14px; }
     .headline { font-size: clamp(30px, 9.5vw, 46px); line-height: 1; }
-    .cta { padding: 14px 30px; font-size: 12px; }
     .toprow { font-size: 10px; }
-    .shot-card { width: 220px; }
+    .manifesto { font-size: 16px; gap: 18px; }
+
+    .tl-item { grid-template-columns: 1fr; row-gap: 12px; padding-left: 26px; padding-bottom: 7vh; }
+    .tl-item::before { left: 4px; }
+    .tl-item::after { left: 0; top: 3px; }
+    .tl-year { text-align: left; padding-top: 0; }
+    .reasons { grid-template-columns: 1fr; border-top: none; }
+    .reasons div { padding: 14px 0; border-top: 1px solid var(--rule); flex-direction: row; align-items: baseline; gap: 16px; }
+    .reasons p { font-size: 16px; }
+    .footnote { font-size: 17px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .marquee { animation-duration: 120s; }
+    .js .reveal { transition: opacity 0.6s ease; transform: none; }
   }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -117,35 +176,70 @@
 
 <main class="portfolio">
 
-  <div class="section-label"><span>01 — Ecommerce</span></div>
+  <div class="section-label"><span>01 — Visión</span></div>
 
-  <div class="marquee-viewport">
-    <div class="marquee">
-      <div class="shot-card"><img src="assets/results/1786235095684.png" width="744" height="130" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235131664.png" width="884" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235145064.png" width="884" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235162804.png" width="884" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235179732.png" width="884" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235198956.png" width="848" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235221151.png" width="820" height="126" alt="Resultado de tienda"></div>
-      <div class="shot-card"><img src="assets/results/1786235235616.png" width="820" height="126" alt="Resultado de tienda"></div>
-      <!-- duplicate set for the seamless loop -->
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235095684.png" width="744" height="130" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235131664.png" width="884" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235145064.png" width="884" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235162804.png" width="884" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235179732.png" width="884" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235198956.png" width="848" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235221151.png" width="820" height="126" alt=""></div>
-      <div class="shot-card" aria-hidden="true"><img src="assets/results/1786235235616.png" width="820" height="126" alt=""></div>
+  <div class="manifesto">
+    <p class="reveal">Tengo una ambición que la mayoría de la gente de mi entorno jamás va a entender, y capaz hasta les parezca ridícula. No los juzgo; es más, entiendo perfectamente el porqué.</p>
+    <p class="reveal">Pero mi ambición va mucho más allá de lo material, y mi convicción va mucho más allá de una motivación efímera por ver un TikTok motivacional.</p>
+    <p class="reveal">Creo en lo que creo, y sé que lo voy a lograr, porque tengo de mi lado al <strong>Rey de reyes</strong> y a la <strong>Luz del mundo</strong>, y sé que la visión que tengo Él me la dio. Con esto no busco nada más que inspirar a otros a perseguir los sueños que Dios coloca en sus mentes.</p>
+  </div>
+
+  <p class="quote reveal">Porque con Él,<br><b>TODO</b> <em>es posible.</em></p>
+
+  <div class="section-label spaced"><span>02 — El camino</span></div>
+
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-year">12 — 13 años</div>
+      <div class="tl-body">
+        <h2 class="tl-title">Emprendedor nato.</h2>
+        <p class="tl-text">Desde los 12–13 años probé de todo.</p>
+        <ul class="ventures">
+          <li><span>Marca de ropa</span><span>$0</span></li>
+          <li><span>Tienda de sneakers</span><span>$0</span></li>
+          <li><span>Tienda de perfumes</span><span>$0</span></li>
+          <li><span>Tienda de relojes</span><span>$0</span></li>
+          <li><span>Incontables cosas más</span><span>$0</span></li>
+        </ul>
+        <p class="footnote">El 99% me dio un profit de $0.</p>
+      </div>
     </div>
+
+    <div class="tl-item key reveal">
+      <div class="tl-year">Después</div>
+      <div class="tl-body">
+        <p class="ecom-sub">El negocio que me va a dar la vida que quiero</p>
+        <h2 class="ecom">E-<em>commerce</em></h2>
+        <p class="tl-text">Comercio electrónico. Que al final del día, es crear una empresa.</p>
+        <div class="reasons">
+          <div><span>01</span><p>Porque me gusta.</p></div>
+          <div><span>02</span><p>Porque es sostenible a largo plazo.</p></div>
+          <div><span>03</span><p>Porque puedo aportar valor al mundo.</p></div>
+        </div>
+        <p class="tl-text">Y no lo digo porque me haya dado una cantidad insana de dinero, ni mucho menos. Ya vi que es posible y ya vi algunos resultados.</p>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-year">Hoy</div>
+      <div class="tl-body">
+        <p class="big-num">0.000001%</p>
+        <p class="big-num-sub">de lo que <b>VOY</b> a lograr.</p>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-year">Siempre</div>
+      <div class="tl-body">
+        <p class="tl-text">Lo único que va a hacer posible eso:</p>
+        <p class="closing">Ser constante con <em>Dios primero.</em></p>
+      </div>
+    </div>
+
   </div>
 
-  <div class="cta-wrap">
-    <a class="cta" href="https://discord.gg/HV8rJWJe6" target="_blank" rel="noopener">Comunidad</a>
-  </div>
-
-  <div class="section-label spaced"><span>02 — Omnia</span></div>
+  <div class="section-label spaced"><span>03 — Omnia</span></div>
 
   <div class="omnia">
     <img src="assets/brand/omnia-mark.png" width="1009" height="489" alt="Omnia">
@@ -153,6 +247,17 @@
   </div>
 
 </main>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
