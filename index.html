@@ -18,7 +18,6 @@
     --muted: oklch(0.55 0.004 260);
     --label: oklch(0.5 0.004 260);
     --kicker: oklch(0.6 0.004 260);
-    --faint: oklch(0.38 0.004 260);
     --rule: oklch(1 0 0 / 0.08);
     --sans: 'Inter', Helvetica, Arial, sans-serif;
     --serif: 'Newsreader', serif;
@@ -75,58 +74,7 @@
   }
   .quote b { font-weight: 500; letter-spacing: 0.02em; }
 
-  /* 02 — El camino: one column, line on the left, every step reads label → title → detail */
-  .timeline { width: 100%; max-width: 760px; padding: 4vh 0 0; }
-  .tl-item { position: relative; padding: 0 0 10vh 44px; }
-  .tl-item:last-child { padding-bottom: 0; }
-  .tl-item::before {
-    content: ""; position: absolute; left: 5px; top: 18px; bottom: 0; width: 1px;
-    background: linear-gradient(oklch(1 0 0 / 0.22), oklch(1 0 0 / 0.1));
-  }
-  .tl-item:last-child::before { display: none; }
-  .tl-item::after {
-    content: ""; position: absolute; left: 0; top: 3px; width: 11px; height: 11px; border-radius: 50%;
-    background: var(--bg); border: 1px solid var(--soft); box-sizing: border-box;
-  }
-  .tl-item.key::after { background: var(--fg); border-color: var(--fg); box-shadow: 0 0 0 6px oklch(1 0 0 / 0.06), 0 0 24px oklch(1 0 0 / 0.35); }
-  .tl-body { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-  .tl-year { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); line-height: 17px; }
-  .tl-year b { color: var(--fg); font-weight: 500; margin-right: 10px; }
-  .tl-title { margin: 0; font-weight: 300; font-size: clamp(26px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
-  .tl-text { font-size: 16px; font-weight: 300; line-height: 1.6; color: var(--soft); max-width: 600px; }
-
-  .ventures { list-style: none; margin: 4px 0 0; padding: 0; max-width: 520px; }
-  .ventures li {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    padding: 13px 0; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 300; color: var(--muted);
-  }
-  .ventures li span:first-child { text-decoration: line-through; text-decoration-color: var(--faint); }
-  .ventures li span:last-child { font-variant-numeric: tabular-nums; font-size: 13px; letter-spacing: 0.06em; color: var(--faint); }
-  .footnote { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--soft); }
-
-  .ecom {
-    margin: 4px 0 0; font-weight: 300; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase;
-    font-size: clamp(42px, 7.6vw, 108px);
-  }
-  .reasons {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 12px;
-    border-top: 1px solid oklch(1 0 0 / 0.18);
-  }
-  .reasons div { padding: 18px 20px 0 0; display: flex; flex-direction: column; gap: 10px; }
-  .reasons span { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .reasons p { font-size: 17px; font-weight: 300; line-height: 1.35; }
-
-  .big-num {
-    margin: 0; font-weight: 300; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
-    font-size: clamp(44px, 7.4vw, 104px);
-  }
-  .big-num-sub { font-size: clamp(18px, 1.8vw, 22px); font-weight: 300; color: var(--soft); }
-  .big-num-sub b { color: var(--fg); font-weight: 600; letter-spacing: 0.04em; }
-
-  .closing { margin: 0; font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; font-size: clamp(30px, 4.6vw, 60px); }
-  .closing em { white-space: nowrap; }
-
-  /* 03 — Omnia */
+  /* 02 — Omnia */
   .omnia { width: 100%; max-width: 1300px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 2vh 0; }
   .omnia img { width: clamp(64px, 8vw, 96px); height: auto; }
   .omnia a {
@@ -147,11 +95,6 @@
     .verse { font-size: 13px; max-width: 280px; }
     .manifesto { font-size: 16px; gap: 18px; }
 
-    .tl-item { padding-left: 30px; padding-bottom: 8vh; }
-    .reasons { grid-template-columns: 1fr; border-top: none; }
-    .reasons div { padding: 14px 0; border-top: 1px solid var(--rule); flex-direction: row; align-items: baseline; gap: 16px; }
-    .reasons p { font-size: 16px; }
-    .footnote { font-size: 17px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -182,60 +125,7 @@
 
   <p class="quote reveal">Porque con Él,<br><b>TODO</b> <em>es posible.</em></p>
 
-  <div class="section-label spaced"><span>02 — El camino</span></div>
-
-  <div class="timeline">
-
-    <div class="tl-item reveal">
-      <div class="tl-body">
-        <p class="tl-year"><b>01</b>A los 12–13 años</p>
-        <h2 class="tl-title">Probé de todo.</h2>
-        <p class="tl-text">Me considero un emprendedor nato. Desde chico arranqué negocio tras negocio:</p>
-        <ul class="ventures">
-          <li><span>Marca de ropa</span><span>$0</span></li>
-          <li><span>Tienda de sneakers</span><span>$0</span></li>
-          <li><span>Tienda de perfumes</span><span>$0</span></li>
-          <li><span>Tienda de relojes</span><span>$0</span></li>
-          <li><span>Incontables cosas más</span><span>$0</span></li>
-        </ul>
-        <p class="footnote">El 99% me dio un profit de $0.</p>
-      </div>
-    </div>
-
-    <div class="tl-item key reveal">
-      <div class="tl-body">
-        <p class="tl-year"><b>02</b>Después de todos esos fracasos</p>
-        <h2 class="tl-title">Encontré el negocio que me va a dar la vida que quiero.</h2>
-        <p class="ecom">E-commerce</p>
-        <p class="tl-text">Comercio electrónico. Que al final del día, es crear una empresa.</p>
-        <div class="reasons">
-          <div><span>01</span><p>Porque me gusta.</p></div>
-          <div><span>02</span><p>Porque es sostenible a largo plazo.</p></div>
-          <div><span>03</span><p>Porque puedo aportar valor al mundo.</p></div>
-        </div>
-        <p class="tl-text">Y no lo digo porque me haya dado una cantidad insana de dinero, ni mucho menos. Ya vi que es posible y ya vi algunos resultados.</p>
-      </div>
-    </div>
-
-    <div class="tl-item reveal">
-      <div class="tl-body">
-        <p class="tl-year"><b>03</b>Hoy</p>
-        <h2 class="tl-title">Recién empieza.</h2>
-        <p class="big-num">0.000001%</p>
-        <p class="big-num-sub">Eso es lo que logré de lo que <b>VOY</b> a lograr.</p>
-      </div>
-    </div>
-
-    <div class="tl-item reveal">
-      <div class="tl-body">
-        <p class="tl-year"><b>04</b>Lo que lo hace posible</p>
-        <p class="closing">Ser constante con <em>Dios primero.</em></p>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="section-label spaced"><span>03 — Omnia</span></div>
+  <div class="section-label spaced"><span>02 — Omnia</span></div>
 
   <div class="omnia">
     <img src="assets/brand/omnia-mark.png" width="1009" height="489" alt="Omnia">
