@@ -17,6 +17,7 @@
     --soft: oklch(0.78 0.003 260);
     --muted: oklch(0.55 0.004 260);
     --label: oklch(0.5 0.004 260);
+    --kicker: oklch(0.6 0.004 260);
     --faint: oklch(0.38 0.004 260);
     --rule: oklch(1 0 0 / 0.08);
     --sans: 'Inter', Helvetica, Arial, sans-serif;
@@ -48,6 +49,8 @@
     font-size: clamp(38px, 7.2vw, 104px);
   }
 
+  .verse { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.5; letter-spacing: 0.02em; color: var(--kicker); max-width: 420px; }
+
   /* Sections */
   .portfolio {
     width: 100%; box-sizing: border-box; padding: 4vh 6vw 6vh;
@@ -72,29 +75,24 @@
   }
   .quote b { font-weight: 500; letter-spacing: 0.02em; }
 
-  /* 02 — El camino */
-  .timeline { width: 100%; max-width: 1000px; padding: 3vh 0 0; }
-  .tl-item {
-    position: relative; display: grid; grid-template-columns: 150px 1fr; column-gap: 48px;
-    padding-bottom: 9vh;
-  }
+  /* 02 — El camino: one column, line on the left, every step reads label → title → detail */
+  .timeline { width: 100%; max-width: 760px; padding: 4vh 0 0; }
+  .tl-item { position: relative; padding: 0 0 10vh 44px; }
   .tl-item:last-child { padding-bottom: 0; }
-  /* the vertical line runs between the year column and the content */
   .tl-item::before {
-    content: ""; position: absolute; left: 174px; top: 10px; bottom: -10px; width: 1px; background: var(--rule);
+    content: ""; position: absolute; left: 5px; top: 18px; bottom: 0; width: 1px;
+    background: linear-gradient(oklch(1 0 0 / 0.22), oklch(1 0 0 / 0.1));
   }
   .tl-item:last-child::before { display: none; }
   .tl-item::after {
-    content: ""; position: absolute; left: 170px; top: 6px; width: 9px; height: 9px; border-radius: 50%;
-    background: var(--bg); border: 1px solid var(--muted); box-sizing: border-box;
+    content: ""; position: absolute; left: 0; top: 3px; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--soft); box-sizing: border-box;
   }
   .tl-item.key::after { background: var(--fg); border-color: var(--fg); box-shadow: 0 0 0 6px oklch(1 0 0 / 0.06), 0 0 24px oklch(1 0 0 / 0.35); }
-  .tl-year {
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
-    text-align: right; padding-top: 4px;
-  }
-  .tl-body { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-  .tl-title { margin: 0; font-weight: 300; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.02em; line-height: 1.1; }
+  .tl-body { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .tl-year { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); line-height: 17px; }
+  .tl-year b { color: var(--fg); font-weight: 500; margin-right: 10px; }
+  .tl-title { margin: 0; font-weight: 300; font-size: clamp(26px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
   .tl-text { font-size: 16px; font-weight: 300; line-height: 1.6; color: var(--soft); max-width: 600px; }
 
   .ventures { list-style: none; margin: 4px 0 0; padding: 0; max-width: 520px; }
@@ -107,10 +105,9 @@
   .footnote { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--soft); }
 
   .ecom {
-    margin: 0; font-weight: 300; line-height: 0.92; letter-spacing: -0.045em;
-    font-size: clamp(54px, 10.5vw, 148px);
+    margin: 4px 0 0; font-weight: 300; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase;
+    font-size: clamp(42px, 7.6vw, 108px);
   }
-  .ecom-sub { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
   .reasons {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 12px;
     border-top: 1px solid oklch(1 0 0 / 0.18);
@@ -147,12 +144,10 @@
     .stack { gap: 14px; }
     .headline { font-size: clamp(30px, 9.5vw, 46px); line-height: 1; }
     .toprow { font-size: 10px; }
+    .verse { font-size: 13px; max-width: 280px; }
     .manifesto { font-size: 16px; gap: 18px; }
 
-    .tl-item { grid-template-columns: 1fr; row-gap: 12px; padding-left: 26px; padding-bottom: 7vh; }
-    .tl-item::before { left: 4px; }
-    .tl-item::after { left: 0; top: 3px; }
-    .tl-year { text-align: left; padding-top: 0; }
+    .tl-item { padding-left: 30px; padding-bottom: 8vh; }
     .reasons { grid-template-columns: 1fr; border-top: none; }
     .reasons div { padding: 14px 0; border-top: 1px solid var(--rule); flex-direction: row; align-items: baseline; gap: 16px; }
     .reasons p { font-size: 16px; }
@@ -171,6 +166,7 @@
   <div class="toprow"><span>OA</span></div>
   <div class="stack">
     <h1 class="headline"><em>Mateo 19:26</em></h1>
+    <p class="verse">“Para los hombres esto es imposible; mas para Dios todo es posible.”</p>
   </div>
 </header>
 
@@ -191,10 +187,10 @@
   <div class="timeline">
 
     <div class="tl-item reveal">
-      <div class="tl-year">12 — 13 años</div>
       <div class="tl-body">
-        <h2 class="tl-title">Emprendedor nato.</h2>
-        <p class="tl-text">Desde los 12–13 años probé de todo.</p>
+        <p class="tl-year"><b>01</b>A los 12–13 años</p>
+        <h2 class="tl-title">Probé de todo.</h2>
+        <p class="tl-text">Me considero un emprendedor nato. Desde chico arranqué negocio tras negocio:</p>
         <ul class="ventures">
           <li><span>Marca de ropa</span><span>$0</span></li>
           <li><span>Tienda de sneakers</span><span>$0</span></li>
@@ -207,10 +203,10 @@
     </div>
 
     <div class="tl-item key reveal">
-      <div class="tl-year">Después</div>
       <div class="tl-body">
-        <p class="ecom-sub">El negocio que me va a dar la vida que quiero</p>
-        <h2 class="ecom">E-<em>commerce</em></h2>
+        <p class="tl-year"><b>02</b>Después de todos esos fracasos</p>
+        <h2 class="tl-title">Encontré el negocio que me va a dar la vida que quiero.</h2>
+        <p class="ecom">E-commerce</p>
         <p class="tl-text">Comercio electrónico. Que al final del día, es crear una empresa.</p>
         <div class="reasons">
           <div><span>01</span><p>Porque me gusta.</p></div>
@@ -222,17 +218,17 @@
     </div>
 
     <div class="tl-item reveal">
-      <div class="tl-year">Hoy</div>
       <div class="tl-body">
+        <p class="tl-year"><b>03</b>Hoy</p>
+        <h2 class="tl-title">Recién empieza.</h2>
         <p class="big-num">0.000001%</p>
-        <p class="big-num-sub">de lo que <b>VOY</b> a lograr.</p>
+        <p class="big-num-sub">Eso es lo que logré de lo que <b>VOY</b> a lograr.</p>
       </div>
     </div>
 
     <div class="tl-item reveal">
-      <div class="tl-year">Siempre</div>
       <div class="tl-body">
-        <p class="tl-text">Lo único que va a hacer posible eso:</p>
+        <p class="tl-year"><b>04</b>Lo que lo hace posible</p>
         <p class="closing">Ser constante con <em>Dios primero.</em></p>
       </div>
     </div>
