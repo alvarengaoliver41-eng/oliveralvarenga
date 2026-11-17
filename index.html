@@ -50,9 +50,21 @@
     mask: { enabled: false }
   };
 
-  var FOCUS_X = 0.64, FOCUS_Y = 0.5; // keeps Franklin's bill in frame when a narrow screen crops the photo
-  var SUB = 4; // dither sub-pixels per cell edge (Bayer 4×4)
-  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  // where the bill fan sits in the photo (normalised); the whole fan is always kept on screen
+  var SUBJECT = { x0: 0.2, y0: 0.16, x1: 0.92, y1: 0.86 };
+  var DOT_CSS = 1.75, DOT_CSS_PHONE = 1.25; // dither dot size in CSS px — small enough to keep the bills legible
+  // 8×8 Bayer matrix, indexed by the global dot position so dots never seam at cell borders
+  var BAYER = (function () {
+    var m = [0, 2, 3, 1], n = 2;
+    while (n < 8) {
+      var next = new Array(n * n * 4);
+      for (var y = 0; y < n * 2; y++) for (var x = 0; x < n * 2; x++)
+        next[y * n * 2 + x] = 4 * m[(y % n) * n + (x % n)] + [0, 2, 3, 1][(y >= n ? 2 : 0) + (x >= n ? 1 : 0)];
+      m = next; n *= 2;
+    }
+    return m.map(function (v) { return (v + 0.5) / 64; });
+  })();
+  var SUB, dot; // dots per cell edge and dot size in device px, set in setup()
   var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var canvas = document.getElementById('fx');
@@ -79,23 +91,31 @@
   var W, H, dpr, cols, rows, subW, subH;
   var cellCol, fineLum, cover, dith, dithCtx, dithData, frame, fctx, tmp, tctx, small, sctx, scan, vign, grain = [];
 
-  // Draw the photo into a w×h grid (height-fitted, centred) and read it back; the browser averages each cell.
+  // Draw the photo into a w×h grid and read it back; the browser averages each cell.
+  // The photo's background is pure white, so the screen is filled with white and the photo is sized
+  // so the whole bill fan fits (nothing cut off on phones) while filling as much of the screen as it can.
   function sample(w, h) {
     var c = mk(w, h), x = c.getContext('2d', { willReadFrequently: true });
     x.imageSmoothingQuality = 'high';
-    // cover the whole screen, keeping the bills centred when the photo gets cropped
-    var scale = Math.max(w / img.width, h / img.height), dw = img.width * scale, dh = img.height * scale;
-    var dx = Math.max(w - dw, Math.min(0, w / 2 - FOCUS_X * dw));
-    var dy = Math.max(h - dh, Math.min(0, h / 2 - FOCUS_Y * dh));
-    x.drawImage(img, dx, dy, dw, dh);
+    x.fillStyle = '#fff'; x.fillRect(0, 0, w, h);
+    var sw = (SUBJECT.x1 - SUBJECT.x0) * img.width, sh = (SUBJECT.y1 - SUBJECT.y0) * img.height;
+    var portrait = w < h;
+    var scale = Math.min(w * (portrait ? 0.96 : 0.86) / sw, h * (portrait ? 0.8 : 0.86) / sh);
+    var dw = img.width * scale, dh = img.height * scale;
+    var cx = (SUBJECT.x0 + SUBJECT.x1) / 2, cy = (SUBJECT.y0 + SUBJECT.y1) / 2;
+    x.drawImage(img, w / 2 - cx * dw, h / 2 - cy * dh, dw, dh);
     return x.getImageData(0, 0, w, h).data;
   }
 
   function setup() {
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (innerWidth * innerHeight * dpr * dpr > 3e6) dpr = Math.min(dpr, 1.5); // big screens: keep it smooth
     W = Math.round(innerWidth * dpr); H = Math.round(innerHeight * dpr);
     canvas.width = W; canvas.height = H;
-    var cs = P.cellSize * dpr;
+    // whole-pixel dots, and a whole number of dots per cell, so the pattern stays crisp
+    dot = Math.max(1, Math.round((innerWidth < 640 ? DOT_CSS_PHONE : DOT_CSS) * dpr));
+    SUB = Math.max(1, Math.round(P.cellSize * dpr / dot));
+    var cs = SUB * dot;
     cols = Math.ceil(W / cs); rows = Math.ceil(H / cs);
     subW = cols * SUB; subH = rows * SUB;
 
@@ -142,7 +162,7 @@
     // vignette
     vign = mk(W, H);
     var vc = vign.getContext('2d'), g = vc.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.25, W / 2, H / 2, Math.hypot(W, H) / 2);
-    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,' + Math.min(1, P.pfx.vignette.intensity / 100 * 1.6) + ')');
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,' + Math.min(1, P.pfx.vignette.intensity / 100 * 0.8) + ')');
     vc.fillStyle = g; vc.fillRect(0, 0, W, H);
     // film-grain tiles, cycled per frame
     grain = [];
@@ -160,16 +180,16 @@
     var tick = reduceMotion || !P.animated ? 0 : Math.floor(t / 1000 * rate);
     var global = tick ? 1 - ai * 0.12 * hash(tick, 3) : 1;
     for (var cy = 0; cy < rows; cy++) for (var cx = 0; cx < cols; cx++) {
-      var ci = cy * cols + cx, on = cover[ci], f = global;
+      var ci = cy * cols + cx, f = cover[ci] ? global : global * 0.75;
       if (tick) {
         var r = hash(ci, tick);
-        if (r < 0.08 * ai) f *= 0.45; else if (r > 1 - 0.04 * ai) f *= 1.5;
+        if (r < 0.08 * ai) f *= 0.7; else if (r > 1 - 0.04 * ai) f *= 1.5;
       }
       // ink dots sit in the mid-greys so the overlay tint turns them green (white stays white)
       var cr = 60 + cellCol[ci * 3] * 0.3, cg = 60 + cellCol[ci * 3 + 1] * 0.3, cb = 60 + cellCol[ci * 3 + 2] * 0.3;
       for (var sy = 0; sy < SUB; sy++) for (var sx = 0; sx < SUB; sx++) {
         var i = (cy * SUB + sy) * subW + cx * SUB + sx, o = i * 4;
-        if (on && (1 - fineLum[i]) * f > (BAYER[sy * 4 + sx] + 0.5) / 16) {
+        if ((1 - fineLum[i]) * f > BAYER[((cy * SUB + sy) & 7) * 8 + ((cx * SUB + sx) & 7)]) {
           d[o] = cr; d[o + 1] = cg; d[o + 2] = cb; d[o + 3] = 255;
         } else d[o + 3] = 0;
       }
@@ -189,7 +209,7 @@
     // 3. cells
     renderCells(t);
     fctx.imageSmoothingEnabled = false;
-    fctx.drawImage(dith, 0, 0, subW, subH, 0, 0, cols * P.cellSize * dpr, rows * P.cellSize * dpr);
+    fctx.drawImage(dith, 0, 0, subW, subH, 0, 0, subW * dot, subH * dot);
     fctx.imageSmoothingEnabled = true;
 
     // 4. tint
@@ -200,7 +220,7 @@
     // 5. post effects
     if (pfx.chromatic.enabled) {
       // split off the red channel and shift it sideways
-      var off = Math.max(1, Math.round(pfx.chromatic.intensity / 100 * 5 * dpr));
+      var off = Math.max(1, Math.round(pfx.chromatic.intensity / 100 * 2.5 * dpr));
       tctx.globalCompositeOperation = 'copy'; tctx.drawImage(frame, 0, 0);
       tctx.globalCompositeOperation = 'multiply'; tctx.fillStyle = '#ff0000'; tctx.fillRect(0, 0, W, H);
       fctx.globalCompositeOperation = 'multiply'; fctx.fillStyle = '#00ffff'; fctx.fillRect(0, 0, W, H);
@@ -211,7 +231,7 @@
     if (pfx.bloom.enabled) {
       // cheap blur: downscale ×8 and screen it back on top
       sctx.globalCompositeOperation = 'copy'; sctx.drawImage(frame, 0, 0, small.width, small.height);
-      fctx.globalCompositeOperation = 'screen'; fctx.globalAlpha = pfx.bloom.intensity / 100 * 0.3;
+      fctx.globalCompositeOperation = 'screen'; fctx.globalAlpha = pfx.bloom.intensity / 100 * 0.2;
       fctx.drawImage(small, 0, 0, W, H);
       fctx.globalAlpha = 1; fctx.globalCompositeOperation = 'source-over';
     }
@@ -220,14 +240,14 @@
       tctx.globalCompositeOperation = 'copy'; tctx.drawImage(frame, 0, 0);
       for (var b = 0, bands = 1 + Math.floor(Math.random() * 3); b < bands; b++) {
         var bh = Math.round((4 + Math.random() * 40) * dpr), by = Math.floor(Math.random() * (H - bh));
-        var shift = Math.round((Math.random() - 0.5) * pfx.glitch.intensity * 3 * dpr);
+        var shift = Math.round((Math.random() - 0.5) * pfx.glitch.intensity * 1.5 * dpr);
         fctx.drawImage(tmp, 0, by, W, bh, shift, by, W, bh);
       }
     }
 
     if (pfx.scanLines.enabled) {
       fctx.save();
-      fctx.globalAlpha = pfx.scanLines.intensity / 100 * 0.9;
+      fctx.globalAlpha = pfx.scanLines.intensity / 100 * 0.6;
       fctx.fillStyle = fctx.createPattern(scan, 'repeat');
       if (!still) fctx.translate(0, (t / 60) % scan.height);
       fctx.fillRect(0, -scan.height, W, H + scan.height * 2);
@@ -235,7 +255,7 @@
     }
 
     if (pfx.filmGrain.enabled) {
-      fctx.globalCompositeOperation = 'overlay'; fctx.globalAlpha = pfx.filmGrain.intensity / 100 * 0.35;
+      fctx.globalCompositeOperation = 'overlay'; fctx.globalAlpha = pfx.filmGrain.intensity / 100 * 0.2;
       fctx.fillStyle = fctx.createPattern(grain[still ? 0 : Math.floor(t / 50) % grain.length], 'repeat');
       fctx.fillRect(0, 0, W, H);
       fctx.globalAlpha = 1; fctx.globalCompositeOperation = 'source-over';
