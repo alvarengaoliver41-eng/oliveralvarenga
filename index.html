@@ -5,145 +5,267 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oliver Alvarenga</title>
 <meta name="description" content="Mateo 19:26">
-<meta name="theme-color" content="#0f1011">
+<meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111'/%3E%3Ctext x='50' y='60' font-family='Helvetica, Arial, sans-serif' font-size='28' font-weight='300' fill='%23f2f2f2' text-anchor='middle' letter-spacing='2'%3EOA%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/oliver.jpg">
 <style>
-  :root {
-    --bg: oklch(0.13 0.002 260);
-    --fg: oklch(0.95 0.002 260);
-    --soft: oklch(0.78 0.003 260);
-    --muted: oklch(0.55 0.004 260);
-    --label: oklch(0.5 0.004 260);
-    --kicker: oklch(0.6 0.004 260);
-    --rule: oklch(1 0 0 / 0.08);
-    --sans: 'Inter', Helvetica, Arial, sans-serif;
-    --serif: 'Newsreader', serif;
-  }
-
-  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
-  ::selection { background: oklch(0.94 0.002 260); color: var(--bg); }
-  img { display: block; }
-  p { margin: 0; }
-  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
-
-  /* Hero */
-  .hero {
-    position: relative; width: 100%; box-sizing: border-box; overflow: hidden;
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-    padding: 3vh 6vw 4vh; gap: 8vh;
-  }
-  .toprow {
-    width: 100%; display: flex; justify-content: space-between; align-items: center;
-    letter-spacing: 0.16em; font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--muted);
-  }
-  .stack {
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    max-width: 1000px; padding: 0 4px; gap: 20px;
-  }
-  .headline {
-    margin: 0; font-weight: 300; line-height: 1; letter-spacing: -0.03em; text-wrap: pretty;
-    font-size: clamp(38px, 7.2vw, 104px);
-  }
-
-  .verse { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.5; letter-spacing: 0.02em; color: var(--kicker); max-width: 420px; }
-
-  /* Sections */
-  .portfolio {
-    width: 100%; box-sizing: border-box; padding: 4vh 6vw 6vh;
-    display: flex; flex-direction: column; align-items: center; gap: 28px;
-  }
-  .section-label {
-    width: 100%; max-width: 1300px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--label);
-    border-bottom: 1px solid var(--rule); padding-bottom: 14px;
-  }
-  .section-label.spaced { margin-top: 8vh; }
-
-  /* 01 — Visión */
-  .manifesto {
-    width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 22px;
-    padding: 3vh 0 1vh; font-size: clamp(17px, 1.5vw, 20px); font-weight: 300; line-height: 1.6; color: var(--soft);
-  }
-  .manifesto strong { color: var(--fg); font-weight: 400; }
-  .quote {
-    margin: 4vh 0 0; text-align: center; font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
-    font-size: clamp(32px, 5.4vw, 72px);
-  }
-  .quote b { font-weight: 500; letter-spacing: 0.02em; }
-
-  /* 02 — Omnia */
-  .omnia { width: 100%; max-width: 1300px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 2vh 0; }
-  .omnia img { width: clamp(64px, 8vw, 96px); height: auto; }
-  .omnia a {
-    text-decoration: none; color: var(--fg); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-    border-bottom: 1px solid oklch(1 0 0 / 0.3); padding-bottom: 4px; transition: border-color 0.2s;
-  }
-  .omnia a:hover, .omnia a:focus-visible { border-color: var(--fg); }
-
-  /* Scroll reveal — only when JS is running, so content is never hidden without it */
-  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
-  .js .reveal.in { opacity: 1; transform: none; }
-
-  @media (max-width: 640px) {
-    .hero { padding: 2.5vh 6vw 3vh; gap: 6vh; }
-    .stack { gap: 14px; }
-    .headline { font-size: clamp(30px, 9.5vw, 46px); line-height: 1; }
-    .toprow { font-size: 10px; }
-    .verse { font-size: 13px; max-width: 280px; }
-    .manifesto { font-size: 16px; gap: 18px; }
-
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .js .reveal { transition: opacity 0.6s ease; transform: none; }
-  }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { display: block; position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; }
+  h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 </style>
-<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-
-<header class="hero">
-  <div class="toprow"><span>OA</span></div>
-  <div class="stack">
-    <h1 class="headline"><em>Mateo 19:26</em></h1>
-    <p class="verse">“Para los hombres esto es imposible; mas para Dios todo es posible.”</p>
-  </div>
-</header>
-
-<main class="portfolio">
-
-  <div class="section-label"><span>01 — Visión</span></div>
-
-  <div class="manifesto">
-    <p class="reveal">Tengo una ambición que la mayoría de la gente de mi entorno jamás va a entender, y capaz hasta les parezca ridícula. No los juzgo; es más, entiendo perfectamente el porqué.</p>
-    <p class="reveal">Pero mi ambición va mucho más allá de lo material, y mi convicción va mucho más allá de una motivación efímera por ver un TikTok motivacional.</p>
-    <p class="reveal">Creo en lo que creo, y sé que lo voy a lograr, porque tengo de mi lado al <strong>Rey de reyes</strong> y a la <strong>Luz del mundo</strong>, y sé que la visión que tengo Él me la dio. Con esto no busco nada más que inspirar a otros a perseguir los sueños que Dios coloca en sus mentes.</p>
-  </div>
-
-  <p class="quote reveal">Porque con Él,<br><b>TODO</b> <em>es posible.</em></p>
-
-  <div class="section-label spaced"><span>02 — Omnia</span></div>
-
-  <div class="omnia">
-    <img src="assets/brand/omnia-mark.png" width="1009" height="489" alt="Omnia">
-    <a href="https://omniaparaguay.com" target="_blank" rel="noopener">Entrar →</a>
-  </div>
-
-</main>
+<h1>Oliver Alvarenga</h1>
+<canvas id="fx" role="img" aria-label="Retrato de Oliver Alvarenga en arte ASCII animado"></canvas>
 
 <script>
-  (function () {
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    els.forEach(function (el) { io.observe(el); });
-  })();
-</script>
+/*
+ * "All about the Benjamins" — dither render of a photo with tint, post-effects and flicker.
+ * Pipeline: background → per-cell dither → colour adjust + tint → post-effects (lights and mask are off).
+ */
+(function () {
+  var P = {
+    renderMode: 'dither',
+    bgMode: 'solid', bgColor: '#000000', bgBlur: 12, bgOpacity: 90,
+    cellSize: 14, coverage: 96, invert: false,
+    brightness: 0, contrast: 115, edgeEmphasis: 40, density: 0,
+    tint: '#00ff66', tintOpacity: 45, overlayBlend: 'overlay',
+    saturation: 100, grayscale: 0,
+    blurType: 'off', blurAmount: 35,
+    pfx: {
+      vignette:  { enabled: true,  intensity: 38 },
+      scanLines: { enabled: true,  intensity: 28 },
+      chromatic: { enabled: true,  intensity: 40 },
+      bloom:     { enabled: true,  intensity: 60 },
+      filmGrain: { enabled: true,  intensity: 40 },
+      glitch:    { enabled: true,  intensity: 20 },
+      pixelate:  { enabled: false, intensity: 15 },
+      halftone:  { enabled: false, intensity: 20 },
+      filmDust:  { enabled: false, intensity: 20 }
+    },
+    animated: true, animStyle: 'flicker',
+    animSpeed: { enabled: true, intensity: 100 },
+    animIntensity: { enabled: true, intensity: 60 },
+    lights: { enabled: false, points: [] },
+    mask: { enabled: false }
+  };
 
+  var FOCUS_X = 0.58;
+  var SUB = 4; // dither sub-pixels per cell edge (Bayer 4×4)
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var img = new Image();
+
+  function mk(w, h) { var c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+  function hash(a, b) {
+    var h = (a * 374761393 + b * 668265263) | 0;
+    h = Math.imul(h ^ (h >>> 13), 1274126177);
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+  }
+
+  // Colour adjustments in order: brightness → contrast → saturation → grayscale
+  function adjust(r, g, b) {
+    var br = P.brightness * 2.55, k = P.contrast / 100, s = P.saturation / 100, gs = P.grayscale / 100;
+    r = (r + br - 128) * k + 128; g = (g + br - 128) * k + 128; b = (b + br - 128) * k + 128;
+    var l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    r = l + (r - l) * s; g = l + (g - l) * s; b = l + (b - l) * s;
+    r += (l - r) * gs; g += (l - g) * gs; b += (l - b) * gs;
+    return [Math.max(0, Math.min(255, r)), Math.max(0, Math.min(255, g)), Math.max(0, Math.min(255, b))];
+  }
+
+  var W, H, dpr, cols, rows, subW, subH;
+  var cellCol, fineLum, cover, dith, dithCtx, dithData, frame, fctx, tmp, tctx, small, sctx, scan, vign, grain = [];
+
+  // Draw the photo into a w×h grid (height-fitted, centred) and read it back; the browser averages each cell.
+  function sample(w, h) {
+    var c = mk(w, h), x = c.getContext('2d', { willReadFrequently: true });
+    x.imageSmoothingQuality = 'high';
+    var scale = h / img.height, dw = img.width * scale;
+    // on narrow screens keep the face (≈58% across the photo) centred instead of the photo's middle
+    var dx = dw > w ? Math.max(w - dw, Math.min(0, w / 2 - FOCUS_X * dw)) : (w - dw) / 2;
+    x.drawImage(img, dx, 0, dw, h);
+    return x.getImageData(0, 0, w, h).data;
+  }
+
+  function setup() {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = Math.round(innerWidth * dpr); H = Math.round(innerHeight * dpr);
+    canvas.width = W; canvas.height = H;
+    var cs = P.cellSize * dpr;
+    cols = Math.ceil(W / cs); rows = Math.ceil(H / cs);
+    subW = cols * SUB; subH = rows * SUB;
+
+    // 2. per-cell average colour
+    var cd = sample(cols, rows);
+    cellCol = new Float32Array(cols * rows * 3);
+    for (var i = 0; i < cols * rows; i++) {
+      var a = adjust(cd[i * 4], cd[i * 4 + 1], cd[i * 4 + 2]);
+      cellCol[i * 3] = a[0]; cellCol[i * 3 + 1] = a[1]; cellCol[i * 3 + 2] = a[2];
+    }
+
+    // fine luminance for the dither pattern, with Sobel edges mixed in (edgeEmphasis)
+    var fd = sample(subW, subH), n = subW * subH, lum = new Float32Array(n);
+    for (var j = 0; j < n; j++) {
+      var c = adjust(fd[j * 4], fd[j * 4 + 1], fd[j * 4 + 2]);
+      lum[j] = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
+    }
+    fineLum = new Float32Array(n);
+    var ee = P.edgeEmphasis / 100;
+    for (var y = 0; y < subH; y++) for (var x = 0; x < subW; x++) {
+      var idx = y * subW + x, e = 0;
+      if (x > 0 && y > 0 && x < subW - 1 && y < subH - 1) {
+        var gx = lum[idx - subW + 1] + 2 * lum[idx + 1] + lum[idx + subW + 1] - lum[idx - subW - 1] - 2 * lum[idx - 1] - lum[idx + subW - 1];
+        var gy = lum[idx + subW - 1] + 2 * lum[idx + subW] + lum[idx + subW + 1] - lum[idx - subW - 1] - 2 * lum[idx - subW] - lum[idx - subW + 1];
+        e = Math.min(1, Math.sqrt(gx * gx + gy * gy));
+      }
+      var v = lum[idx] + e * ee - P.density / 100 * 0.5;
+      fineLum[idx] = P.invert ? 1 - v : v;
+    }
+
+    cover = new Uint8Array(cols * rows);
+    for (var k = 0; k < cols * rows; k++) cover[k] = hash(k, 7) * 100 < P.coverage ? 1 : 0;
+
+    dith = mk(subW, subH); dithCtx = dith.getContext('2d');
+    dithData = dithCtx.createImageData(subW, subH);
+    frame = mk(W, H); fctx = frame.getContext('2d');
+    tmp = mk(W, H); tctx = tmp.getContext('2d');
+    small = mk(Math.max(1, W >> 3), Math.max(1, H >> 3)); sctx = small.getContext('2d');
+
+    // scan-line pattern
+    scan = mk(1, Math.max(2, Math.round(3 * dpr)));
+    var sc = scan.getContext('2d'); sc.fillStyle = '#000'; sc.fillRect(0, 0, 1, Math.max(1, Math.round(dpr)));
+    // vignette
+    vign = mk(W, H);
+    var vc = vign.getContext('2d'), g = vc.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.25, W / 2, H / 2, Math.hypot(W, H) / 2);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,' + Math.min(1, P.pfx.vignette.intensity / 100 * 1.6) + ')');
+    vc.fillStyle = g; vc.fillRect(0, 0, W, H);
+    // film-grain tiles, cycled per frame
+    grain = [];
+    for (var t = 0; t < 4; t++) {
+      var gc = mk(192, 192), gx2 = gc.getContext('2d'), gd = gx2.createImageData(192, 192);
+      for (var p = 0; p < gd.data.length; p += 4) { var r = Math.random() * 255; gd.data[p] = gd.data[p + 1] = gd.data[p + 2] = r; gd.data[p + 3] = 255; }
+      gx2.putImageData(gd, 0, 0); grain.push(gc);
+    }
+  }
+
+  // 3. dither every cell into a low-res buffer (one pixel per sub-cell), with the flicker animation
+  function renderCells(t) {
+    var d = dithData.data, ai = P.animIntensity.enabled ? P.animIntensity.intensity / 100 : 0;
+    var rate = 4 + 16 * (P.animSpeed.enabled ? P.animSpeed.intensity / 100 : 0);
+    var tick = reduceMotion || !P.animated ? 0 : Math.floor(t / 1000 * rate);
+    var global = tick ? 1 - ai * 0.12 * hash(tick, 3) : 1;
+    for (var cy = 0; cy < rows; cy++) for (var cx = 0; cx < cols; cx++) {
+      var ci = cy * cols + cx, on = cover[ci], f = global;
+      if (tick) {
+        var r = hash(ci, tick);
+        if (r < 0.08 * ai) f *= 0.45; else if (r > 1 - 0.04 * ai) f *= 1.5;
+      }
+      var m = 0.55 + 0.45 * Math.min(f, 1.2);
+      var cr = Math.min(255, (cellCol[ci * 3] * 0.7 + 70) * m);
+      var cg = Math.min(255, (cellCol[ci * 3 + 1] * 0.7 + 70) * m);
+      var cb = Math.min(255, (cellCol[ci * 3 + 2] * 0.7 + 70) * m);
+      for (var sy = 0; sy < SUB; sy++) for (var sx = 0; sx < SUB; sx++) {
+        var i = (cy * SUB + sy) * subW + cx * SUB + sx, o = i * 4;
+        if (on && fineLum[i] * f > (BAYER[sy * 4 + sx] + 0.5) / 16) {
+          d[o] = cr; d[o + 1] = cg; d[o + 2] = cb; d[o + 3] = 255;
+        } else d[o + 3] = 0;
+      }
+    }
+    dithCtx.putImageData(dithData, 0, 0);
+  }
+
+  function draw(t) {
+    var pfx = P.pfx, still = reduceMotion || !P.animated;
+
+    // 1. background
+    fctx.globalCompositeOperation = 'source-over';
+    fctx.globalAlpha = 1; fctx.fillStyle = '#000'; fctx.fillRect(0, 0, W, H);
+    fctx.globalAlpha = P.bgOpacity / 100; fctx.fillStyle = P.bgColor; fctx.fillRect(0, 0, W, H);
+    fctx.globalAlpha = 1;
+
+    // 3. cells
+    renderCells(t);
+    fctx.imageSmoothingEnabled = false;
+    fctx.drawImage(dith, 0, 0, subW, subH, 0, 0, cols * P.cellSize * dpr, rows * P.cellSize * dpr);
+    fctx.imageSmoothingEnabled = true;
+
+    // 4. tint
+    fctx.globalCompositeOperation = P.overlayBlend; fctx.globalAlpha = P.tintOpacity / 100;
+    fctx.fillStyle = P.tint; fctx.fillRect(0, 0, W, H);
+    // overlay alone barely tints the near-white dots; a multiply pass at the same opacity carries the green into the highlights
+    fctx.globalCompositeOperation = 'multiply'; fctx.fillRect(0, 0, W, H);
+    fctx.globalCompositeOperation = 'source-over'; fctx.globalAlpha = 1;
+
+    // 5. post effects
+    if (pfx.chromatic.enabled) {
+      // split off the red channel and shift it sideways
+      var off = Math.max(1, Math.round(pfx.chromatic.intensity / 100 * 5 * dpr));
+      tctx.globalCompositeOperation = 'copy'; tctx.drawImage(frame, 0, 0);
+      tctx.globalCompositeOperation = 'multiply'; tctx.fillStyle = '#ff0000'; tctx.fillRect(0, 0, W, H);
+      fctx.globalCompositeOperation = 'multiply'; fctx.fillStyle = '#00ffff'; fctx.fillRect(0, 0, W, H);
+      fctx.globalCompositeOperation = 'lighter'; fctx.drawImage(tmp, -off, 0);
+      fctx.globalCompositeOperation = 'source-over';
+    }
+
+    if (pfx.bloom.enabled) {
+      // cheap blur: downscale ×8 and add it back on top
+      sctx.globalCompositeOperation = 'copy'; sctx.drawImage(frame, 0, 0, small.width, small.height);
+      fctx.globalCompositeOperation = 'lighter'; fctx.globalAlpha = pfx.bloom.intensity / 100 * 0.55;
+      fctx.drawImage(small, 0, 0, W, H);
+      fctx.globalAlpha = 1; fctx.globalCompositeOperation = 'source-over';
+    }
+
+    if (pfx.glitch.enabled && !still && Math.random() < pfx.glitch.intensity / 100 * 0.35) {
+      tctx.globalCompositeOperation = 'copy'; tctx.drawImage(frame, 0, 0);
+      for (var b = 0, bands = 1 + Math.floor(Math.random() * 3); b < bands; b++) {
+        var bh = Math.round((4 + Math.random() * 40) * dpr), by = Math.floor(Math.random() * (H - bh));
+        var shift = Math.round((Math.random() - 0.5) * pfx.glitch.intensity * 3 * dpr);
+        fctx.drawImage(tmp, 0, by, W, bh, shift, by, W, bh);
+      }
+    }
+
+    if (pfx.scanLines.enabled) {
+      fctx.save();
+      fctx.globalAlpha = pfx.scanLines.intensity / 100 * 0.9;
+      fctx.fillStyle = fctx.createPattern(scan, 'repeat');
+      if (!still) fctx.translate(0, (t / 60) % scan.height);
+      fctx.fillRect(0, -scan.height, W, H + scan.height * 2);
+      fctx.restore();
+    }
+
+    if (pfx.filmGrain.enabled) {
+      fctx.globalCompositeOperation = 'overlay'; fctx.globalAlpha = pfx.filmGrain.intensity / 100 * 0.35;
+      fctx.fillStyle = fctx.createPattern(grain[still ? 0 : Math.floor(t / 50) % grain.length], 'repeat');
+      fctx.fillRect(0, 0, W, H);
+      fctx.globalAlpha = 1; fctx.globalCompositeOperation = 'source-over';
+    }
+
+    if (pfx.vignette.enabled) fctx.drawImage(vign, 0, 0);
+
+    ctx.drawImage(frame, 0, 0);
+  }
+
+  var last = 0, ready = false;
+  function loop(t) {
+    if (t - last >= 33) { last = t; draw(t); } // ~30fps
+    requestAnimationFrame(loop);
+  }
+
+  var rz;
+  addEventListener('resize', function () {
+    clearTimeout(rz);
+    rz = setTimeout(function () { if (ready) { setup(); draw(performance.now()); } }, 150);
+  });
+
+  img.onload = function () {
+    ready = true; setup(); draw(0);
+    if (!reduceMotion && P.animated) requestAnimationFrame(loop);
+  };
+  img.src = 'assets/oliver.jpg';
+})();
+</script>
 </body>
 </html>
